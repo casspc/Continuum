@@ -1,0 +1,60 @@
+package network_game;
+
+option java_package = "ccostello.game.shared.messages";
+
+message ObjectCommandMessage {
+    optional uint32 commands = 1;
+
+	optional uint32 tick = 5;
+}
+
+message ObjectStateMessage {
+	optional string object_id = 1;
+
+	message Location {
+	    optional float x = 1;
+	    optional float y = 2;
+	    optional float z = 3;
+	}
+
+	message VelocityVector {
+	    optional float x = 1;
+	    optional float y = 2;
+	    optional float z = 3;
+	}
+
+    optional Location location = 2;
+    optional VelocityVector vector = 3;
+    optional float facing_direction = 4; /* rads? degrees? */
+
+	optional uint32 server_tick = 5;
+	optional uint32 client_tick = 6;
+}
+
+message GameMessage {
+
+	optional uint32 sequence_id = 1;
+	optional uint32 ack_id = 2;
+	optional bytes ack_bits = 3;
+
+	optional ObjectCommandMessage user_command = 6;
+	optional ObjectStateMessage user_state = 7;
+	repeated ObjectStateMessage object_state = 8;
+
+	enum MessageType {
+		USER_COMMAND = 0;
+		USER_STATE = 1;
+		REGISTER_CLIENT = 2;
+		REGISTER_CLIENT_RESP = 6;
+		END_CLIENT = 3;
+		WORLD_STATE = 4;
+		CLIENT_UPGRADE_COMMAND = 5;
+	}
+
+	optional MessageType msg_type = 9;
+
+	optional uint32 protocol_id = 10;
+	optional string client_version = 11;
+
+	optional string session_token = 12;
+}
