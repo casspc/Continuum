@@ -18,7 +18,7 @@ class UDPClient
       String sentence = "QOTM?";
       sendData = sentence.getBytes();
       long start = System.currentTimeMillis();
-      for ( int i = 0; i < 1000; i ++ ) {
+      for ( int i = 0; i < 10000; i ++ ) {
 	      DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
 	      clientSocket.send(sendPacket);
 	      DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
